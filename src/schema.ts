@@ -11,6 +11,11 @@ const usernameSchema = Joi.string().alphanum().min(3).max(30).required();
 const emailSchema = Joi.string().email().max(50).required();
 const passwordSchema = Joi.string().min(8).max(50).required();
 
+interface ChallengeStatus {
+    challengeId: string;
+    completed: boolean;
+}
+
 // Schema for a user document in the database.
 interface UsersSchema {
     username: Username;
@@ -21,6 +26,7 @@ interface UsersSchema {
     enemyHealth: number;
     enemyHealthModifier: number;
     inventory: string[];
+    challengeStatuses: ChallengeStatus[];
 }
 
 /**
@@ -83,12 +89,23 @@ function isUsersSchema(data: unknown): data is UsersSchema {
         typeof obj.enemyHealthModifier === "number" &&
         typeof obj.inventory === "object" &&
         Array.isArray(obj.inventory) &&
+        typeof obj.challengeStatuses === "object" &&
+        Array.isArray(obj.challengeStatuses) &&
+        obj.challengeStatuses.every(
+            (status: unknown) =>
+                typeof status === "object" &&
+                status !== null &&
+                "challengeId" in status &&
+                "completed" in status &&
+                typeof (status as { challengeId: unknown }).challengeId === "string" &&
+                typeof (status as { completed: unknown }).completed === "boolean",
+        ) &&
         (obj.lastStreakDate instanceof Date || obj.lastStreakDate === null) &&
         isUsername(obj.username) &&
         isEmail(obj.email)
     );
 }
 
-export type { Username, Email, Password, UsersSchema };
+export type { Username, Email, Password, UsersSchema, ChallengeStatus };
 
 export { isUsername, isEmail, isPassword, isUsersSchema };

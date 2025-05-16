@@ -65,6 +65,7 @@ export default (app: Express, database: Db) => {
                 points: 0,
                 enemyHealthModifier: 0,
                 inventory: [],
+                challengeStatuses: [],
             } satisfies UsersSchema);
             res.send();
         } else {

@@ -119,7 +119,7 @@ export default (app: Express) => {
                     description: weatherData.weather[0].description,
                 },
             };
-            res.json(JSON.stringify(response));
+            res.json(response);
         } else {
             throw new Error("Unexpected response from OpenWeatherMap");
         }

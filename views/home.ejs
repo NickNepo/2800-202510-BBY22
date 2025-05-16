@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-quietquest-green">
     <head>
         <%- include('partials/header') %>
         <title>QuietQuest</title>
@@ -7,42 +7,7 @@
 
     <body class="bg-quietquest-green font-afacad pb-20">
         <!-- Add bottom padding so bottom nav doesn't cover content -->
-
-        <!-- Desktop Top Navbar -->
-        <nav
-            class="hidden md:block fixed top-0 left-0 right-0 bg-[var(--color-quietquest-blue)] text-[var(--color-quietquest-cream)] z-50 transition-all duration-300"
-        >
-            <div class="container mx-auto px-4">
-                <div class="flex justify-between items-center h-16">
-                    <!-- Logo -->
-                    <div class="flex-shrink-0 flex items-center">
-                        <img src="/quietQuestIcons/Logo Wide.svg" alt="Quiet Quest Logo" class="h-10 w-auto object-contain" />
-                    </div>
-
-                    <!-- Desktop Navigation -->
-                    <div class="flex items-center space-x-6">
-                        <a href="#" class="flex items-center space-x-2 hover:text-[var(--color-quietquest-gold)] transition-colors">
-                            <img src="/quietQuestIcons/home.svg" alt="home" class="h-5 w-5" />
-                            <span>Home</span>
-                        </a>
-                        <a href="/shop" class="flex items-center space-x-1 hover:text-[var(--color-quietquest-gold)] transition-colors">
-                            <img src="/quietQuestIcons/store.svg" alt="store" class="h-5 w-5" />
-                            <span>Shop</span>
-                        </a>
-                        <a href="#" class="flex items-center space-x-2 hover:text-[var(--color-quietquest-gold)] transition-colors">
-                            <img src="/quietQuestIcons/bookmark.svg" alt="bookmark" class="h-5 w-5" />
-                            <span>Journal</span>
-                        </a>
-                        <a href="#" class="flex items-center space-x-2 hover:text-[var(--color-quietquest-gold)] transition-colors">
-                            <img src="/quietQuestIcons/user-circle.svg" alt="profile" class="h-5 w-5" />
-                            <span>Profile</span>
-                        </a>
-                        <a href="/logout" class="hover:text-[var(--color-quietquest-gold)] transition-colors">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
+        <%- include('partials/topNavbar') %>
         <!-- Main content -->
         <main class="pt-8 md:pt-20 px-4">
             <!-- Streaks Button -->
@@ -76,10 +41,12 @@
                 <div class="w-32 h-32 rounded-full bg-white"></div>
 
                 <!-- Monster Name -->
-                <div class="w-48 h-10 bg-white rounded shadow flex items-center justify-center font-bold">Monster Name</div>
+                <div class="w-48 h-10 bg-white rounded shadow flex items-center justify-center font-bold text-quietquest-dark">
+                    Monster Name
+                </div>
 
                 <!-- Points -->
-                <div class="text-lg font-semibold">Points: 123</div>
+                <div class="text-lg text-quietquest-dark font-semibold">Points: 123</div>
 
                 <!-- Fight Button -->
                 <button
@@ -126,43 +93,86 @@
             <div id="goals-section" class="goals space-y-4">
                 <!-- Goals Header -->
                 <div class="flex justify-between items-center">
-                    <p class="text-xl font-bold">Goals</p>
+                    <p class="text-xl text-quietquest-dark font-bold">Goals</p>
                     <button class="bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] px-4 py-1 rounded shadow">
                         Filter
                     </button>
                 </div>
 
+                <!-- Modal (hidden by default) -->
+                <div id="goal-modal" class="fixed inset-0 bg-quietquest-green bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div
+                        class="bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] p-6 rounded-xl w-96 shadow-lg space-y-4"
+                    >
+                        <h2 class="text-xl font-semibold" id="modal-title">Goal Title</h2>
+                        <p id="modal-description">This is a placeholder description of the challenge.</p>
+                        <p><strong>Points:</strong> <span id="modal-points">50</span></p>
+                        <p><strong>End Time:</strong> <span id="modal-endtime">Tomorrow 10am</span></p>
+                        <button
+                            onclick="closeModal()"
+                            class="mt-4 px-4 py-2 bg-[var(--color-quietquest-cream)] text-quietquest-dark rounded shadow"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Goal Items -->
-                <div class="space-y-2">
-                    <p>🎯 Goal 1: Practice mindfulness</p>
-                    <p>🎯 Goal 2: Journal for 5 minutes</p>
-                    <p>🎯 Goal 3: Take a short walk</p>
+                <div id="goal-container" class="flex flex-col space-y-4">
+                    <!-- Single Goal -->
+                    <div
+                        onclick="showModal('Do 10 jumping jacks', 'Jump 10 times to get the blood flowing.', 20, 'Today at 5pm')"
+                        class="flex justify-between items-center bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] text-lg px-6 py-4 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform"
+                    >
+                        <span>Do 10 jumping jacks</span>
+                        <span class="bg-[var(--color-quietquest-cream)] text-sm px-3 py-1 rounded-full shadow">+20 pts</span>
+                    </div>
+
+                    <div
+                        onclick="showModal('Meditate for 5 minutes', 'Sit quietly and breathe for 5 minutes.', 30, 'Tonight at 9pm')"
+                        class="flex justify-between items-center bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] text-lg px-6 py-4 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform"
+                    >
+                        <span>Meditate for 5 minutes</span>
+                        <span class="bg-[var(--color-quietquest-cream)] text-sm px-3 py-1 rounded-full shadow">+30 pts</span>
+                    </div>
+
+                    <div
+                        onclick="showModal('Drink a glass of water', 'Hydrate to stay healthy and focused.', 10, 'Tomorrow morning')"
+                        class="flex justify-between items-center bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] text-lg px-6 py-4 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform"
+                    >
+                        <span>Drink a glass of water</span>
+                        <span class="bg-[var(--color-quietquest-cream)] text-sm px-3 py-1 rounded-full shadow">+10 pts</span>
+                    </div>
+
+                    <!-- Completed Goal -->
+                    <div
+                        onclick="showModal('Read a book for 30 minutes', 'Improve your knowledge by reading.', 40, 'Next Monday')"
+                        class="flex justify-between items-center bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] text-lg px-6 py-4 rounded-2xl shadow opacity-60 line-through cursor-pointer hover:scale-[1.01] transition-transform"
+                    >
+                        <span>Read a book for 30 minutes</span>
+                        <span
+                            class="bg-[var(--color-quietquest-dark)] text-[var(--color-quietquest-cream)] text-sm px-3 py-1 rounded-full shadow"
+                            >+40 pts</span
+                        >
+                    </div>
                 </div>
             </div>
         </main>
-
-        <!-- Mobile Bottom Navbar -->
-        <nav
-            class="block md:hidden fixed bottom-0 left-0 right-0 bg-[var(--color-quietquest-blue)] text-[var(--color-quietquest-cream)] z-50 py-2"
-        >
-            <div class="container mx-auto px-4">
-                <div class="flex justify-around items-center">
-                    <a href="#" class="flex flex-col items-center p-2 text-sm">
-                        <img src="/quietQuestIcons/home.svg" alt="home" class="h-6 w-6" />
-                    </a>
-                    <a href="#" class="flex flex-col items-center p-2 text-sm">
-                        <img src="/quietQuestIcons/store.svg" alt="store" class="h-6 w-6" />
-                    </a>
-                    <a href="#" class="flex flex-col items-center p-2 text-sm">
-                        <img src="/quietQuestIcons/bookmark.svg" alt="journal" class="h-6 w-6" />
-                    </a>
-                    <a href="#" class="flex flex-col items-center p-2 text-sm">
-                        <img src="/quietQuestIcons/user-circle.svg" alt="profile" class="h-6 w-6" />
-                    </a>
-                    <a href="/logout" class="text-sm">Logout</a>
-                </div>
-            </div>
-        </nav>
+        <%- include('partials/bottomNavbar') %>
         <script src="/js/battle.js"></script>
+        <!-- JS -->
+        <script>
+            function showModal(title, description, points, endTime) {
+                document.getElementById("modal-title").textContent = title;
+                document.getElementById("modal-description").textContent = description;
+                document.getElementById("modal-points").textContent = points;
+                document.getElementById("modal-endtime").textContent = endTime;
+                document.getElementById("goal-modal").classList.remove("hidden");
+            }
+
+            function closeModal() {
+                document.getElementById("goal-modal").classList.add("hidden");
+            }
+        </script>
     </body>
 </html>

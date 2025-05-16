@@ -3,6 +3,7 @@ import "dotenv/config"; // Load .env file
 
 import sessionMiddleware from "./middleware/session.js";
 import database from "./utils/databaseConnection.js";
+import AI_CLIENT from "./utils/aiClient.js";
 import loadRoutes from "./utils/loadRoutes.js";
 import StatusError from "./utils/statusError.js";
 
@@ -41,7 +42,7 @@ APP.use(sessionMiddleware());
 APP.use(express.static(DIST_PUBLIC_ROOT));
 
 // Register API and route handlers (dynamically)
-await Promise.all([loadRoutes("./src/api", APP, MONGODB_DATABASE), loadRoutes("./src/routes", APP, MONGODB_DATABASE)]);
+await Promise.all([loadRoutes("./src/api", APP, MONGODB_DATABASE, AI_CLIENT), loadRoutes("./src/routes", APP, MONGODB_DATABASE)]);
 
 // Use static middleware to serve static files from the public folder
 APP.use(express.static(PUBLIC_ROOT));

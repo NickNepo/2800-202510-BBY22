@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         healthBar?.classList.remove("hidden");
         goalsSection?.classList.add("hidden");
     });
- 
+
     if(userPoints === null){
         throw new Error("user's points cannot be Null");
     }
@@ -59,43 +59,43 @@ document.addEventListener("DOMContentLoaded", () => {
         const damageNumber = parseInt(damage);
         await attackEnemy(damageNumber);
         location.reload();
- 
 
-    itemsButton?.addEventListener("click", () => {
-        battleMenu?.classList.add("hidden");
-        itemsMenu?.classList.remove("hidden");
-    });
+        itemsButton?.addEventListener("click", () => {
+            battleMenu?.classList.add("hidden");
+            itemsMenu?.classList.remove("hidden");
+        });
 
-    // Go Back from Attack
-    attackGoBack?.addEventListener("click", () => {
-        attackMenu?.classList.add("hidden");
-        battleMenu?.classList.remove("hidden");
-    });
+        // Go Back from Attack
+        attackGoBack?.addEventListener("click", () => {
+            attackMenu?.classList.add("hidden");
+            battleMenu?.classList.remove("hidden");
+        });
 
-    // Go Back from Items
-    itemsGoBack?.addEventListener("click", () => {
-        itemsMenu?.classList.add("hidden");
-        battleMenu?.classList.remove("hidden");
-    });
+        // Go Back from Items
+        itemsGoBack?.addEventListener("click", () => {
+            itemsMenu?.classList.add("hidden");
+            battleMenu?.classList.remove("hidden");
+        });
 
-    // Go back from battle menu to default screen
-    battleGoBack?.addEventListener("click", () => {
-        battleMenu?.classList.add("hidden");
-        healthBar?.classList.add("hidden");
-        goalsSection?.classList.remove("hidden");
-        fightButton?.classList.remove("hidden");
-    });
+        // Go back from battle menu to default screen
+        battleGoBack?.addEventListener("click", () => {
+            battleMenu?.classList.add("hidden");
+            healthBar?.classList.add("hidden");
+            goalsSection?.classList.remove("hidden");
+            fightButton?.classList.remove("hidden");
+        });
 
-    // Streaks Modal
-    const openStreaks = document.getElementById("open-streaks");
-    const closeStreaks = document.getElementById("close-streaks");
-    const streaksModal = document.getElementById("streaks-modal");
+        // Streaks Modal
+        const openStreaks = document.getElementById("open-streaks");
+        const closeStreaks = document.getElementById("close-streaks");
+        const streaksModal = document.getElementById("streaks-modal");
 
-    openStreaks?.addEventListener("click", () => {
-        streaksModal?.classList.remove("hidden");
-    });
+        openStreaks?.addEventListener("click", () => {
+            streaksModal?.classList.remove("hidden");
+        });
 
-    closeStreaks?.addEventListener("click", () => {
-        streaksModal?.classList.add("hidden");
+        closeStreaks?.addEventListener("click", () => {
+            streaksModal?.classList.add("hidden");
+        });
     });
 });

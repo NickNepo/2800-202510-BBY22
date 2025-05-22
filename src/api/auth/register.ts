@@ -61,7 +61,11 @@ export default (app: Express, database: Db) => {
                 email,
                 passwordHash,
                 lastStreakDate: null,
-                enemy: null,
+                enemy: {
+                    "name" : "OverThinker",
+                    "image" : "/monsterIcons/overthinker.svg",
+                    "health" : 100,
+                },
                 points: 0,
                 enemyHealthModifier: 0,
                 inventory: [],

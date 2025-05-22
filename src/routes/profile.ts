@@ -14,7 +14,6 @@ export default (app: Express, database: Db) => {
         if (!req.session.loggedInUserId) {
             throw new StatusError(401, "Please log in first");
         }
-
         // b) Fetch the full user document
         const user = (await getCurrentUser(database, new ObjectId(req.session.loggedInUserId))) as UsersSchema & { _id: ObjectId };
 

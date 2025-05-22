@@ -13,7 +13,7 @@
 
         <!-- ===== Curved Header Background ===== -->
         <!-- Provides the green curved header shape at the top -->
-        <header class="h-32 bg-[#BCDA94] rounded-b-3xl"></header>
+        <header class="h-32 bg-[#BCDA94] rounded-b-3xl md:mt-16"></header>
 
         <!-- ===== Avatar Section ===== -->
         <!-- Positions the user's circular avatar overlapping the header -->
@@ -31,7 +31,7 @@
         <!-- White foreground card containing profile details -->
         <main class="flex-1 bg-[#F7F1E6] -mt-8 p-6 flex flex-col rounded-t-3xl">
             <!-- Username Heading -->
-            <h1 class="text-3xl font-bold text-[#102128] text-center"><%= user.username %></h1>
+            <h1 class="text-3xl font-bold text-[#102128] text-center pt-6"><%= user.username %></h1>
 
             <!-- ===== Streak Counter & Edit Button Row ===== -->
             <!-- Displays today's streak and a link to edit the profile -->
@@ -52,11 +52,11 @@
 
             <!-- ===== Decorative Divider ===== -->
             <!-- Small, centered line under the header -->
-            <hr class="w-24 border-t-2 border-gray-300 my-6 mx-auto" />
+            <hr class="w-24 border-t-2 border-gray-300 my-6 mx-auto w-full" />
 
             <!-- ===== Bio Section ===== -->
             <!-- User-entered biography or placeholder text -->
-            <p class="text-center text-[#102128] text-lg"><%= user.bio || 'Bio goes here' %></p>
+            <p class="text-center text-[#102128] text-lg"><%= user.bio || '' %></p>
 
             <!-- ===== Summary Line ===== -->
             <!-- Shows total tasks completed this session -->
@@ -86,11 +86,11 @@
                 class="relative bg-[#F7F1E6] rounded-xl p-6 max-w-md w-full max-h-full overflow-auto z-10 transform transition-transform duration-200 scale-95"
             >
                 <!-- Modal title -->
-                <h2 class="text-2xl font-bold mb-4 text-[#102128]">Completed Tasks</h2>
+                <h2 class="text-2xl font-bold mb-4 text-[#102128] text-center">Completed Tasks</h2>
                 <!-- List of completed tasks -->
                 <div class="space-y-4">
                     <% if (completedTasks.length) { %> <% completedTasks.forEach(ch => { %>
-                    <div class="bg-[#ECB779] text-[#102128] px-6 py-4 rounded-lg shadow"><%= ch.name %></div>
+                    <div class="bg-[#ECB779] text-[#102128] px-6 py-4 rounded-lg shadow text-center"><%= ch.name %></div>
                     <% }) %>
                     <% } else { %>
                     <p class="text-center text-gray-500">No tasks completed yet.</p>
@@ -114,16 +114,14 @@
                 class="relative bg-[#F7F1E6] rounded-xl p-6 max-w-lg w-full max-h-full overflow-auto z-10 transform transition-transform duration-200 scale-95"
             >
                 <!-- Modal title -->
-                <h2 class="text-2xl font-bold mb-4 text-[#102128]">Purchased Items</h2>
+                <h2 class="text-2xl font-bold mb-4 text-[#102128] text-center">Purchased Items</h2>
                 <!-- Grid of purchased item cards -->
-                <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4">
                     <% if (purchasedItems.length) { %> <% purchasedItems.forEach(item => { %>
-                    <button class="bg-white rounded-lg p-4 flex flex-col items-center shadow transition hover:scale-105">
-                        <% if (item.imageUrl) { %>
-                        <img src="<%= item.imageUrl %>" alt="<%= item.name %>" class="w-16 h-16 mb-2 object-contain" />
-                        <% } %>
+                    <div class="bg-white rounded-lg shadow transition flex justify-evenly items-center p-4">
                         <span class="text-[#102128]"><%= item.name %></span>
-                    </button>
+                        <!-- <img src="<%= item.imageUrl %>" alt="<%= item.name %>" class="w-16 h-16 mb-2 object-contain" /> -->
+                    </div>
                     <% }) %>
                     <% } else { %>
                     <p class="col-span-2 text-center text-gray-500">No items purchased yet.</p>

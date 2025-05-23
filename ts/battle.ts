@@ -53,26 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if(userPoints === null){
-        throw new Error("user's points cannot be Null");
-    }
-
-    async function attackEnemy(damageValue: number | undefined){
-
-        const response = await fetch("/api/enemy/damage", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ damage: damageValue }),
-        });
-        if(response.ok){
-            return await response.json() as EnemyInfo;
-        }else {
-            alert("Error completing the attack");
-        }
-    }
-
     // Attack & Items Navigation
     attackButton?.addEventListener("click", async () => {
         const damage = userPoints.textContent ?? "0";
@@ -119,4 +99,3 @@ document.addEventListener("DOMContentLoaded", () => {
             streaksModal?.classList.add("hidden");
         });
     });
-});

@@ -3,24 +3,33 @@
     <head>
         <%- include('partials/header') %>
         <title>QuietQuest | Oops!</title>
+        <style>
+            .monster-icon {
+                width: 4rem;
+                height: 4rem;
+                object-fit: contain;
+                display: inline-block;
+                margin: 0 auto;
+            }
+        </style>
     </head>
+
+    <!-- CSS applied with AI + tailwind -->
+     
     <body class="bg-quietquest-green text-quietquest-dark font-afacad min-h-screen flex items-center justify-center">
         <div class="bg-quietquest-cream text-center rounded-2xl shadow-lg shadow-quietquest-blue/20 px-10 py-12 w-full max-w-md">
-            <!-- Cute Monster or Emoji -->
-            <div class="text-6xl mb-4">👾</div>
+            <div class="mb-4">
+                <img id="random-monster" class="monster-icon" alt="Random monster" src="/monsterIcons/ghoster.svg" />
+            </div>
 
-            <!-- Error Code -->
             <span class="text-5xl font-bold text-quietquest-blue mb-2 block"><%= errorCode %></span>
 
-            <!-- Error Name -->
             <h1 class="text-xl font-semibold text-quietquest-dark mb-3"><%= errorName %></h1>
 
-            <!-- Optional Error Message -->
             <% if (typeof errorMessage !== "undefined") { %>
             <p class="text-quietquest-dark mb-6"><%= errorMessage %></p>
             <% } %>
 
-            <!-- Go Home Button -->
             <a
                 href="/"
                 class="inline-block px-6 py-2 bg-quietquest-gold text-quietquest-dark rounded-md font-semibold hover:bg-quietquest-dark-gold transition-colors duration-200"
@@ -28,5 +37,13 @@
                 Return to Base Camp 🏕️
             </a>
         </div>
+
+        <script>
+            const monsters = ["ghoster.svg", "judgmentaleye.svg", "mrburnout.svg", "overthinker.svg", "socialbattery.svg"];
+
+            const randomMonster = monsters[Math.floor(Math.random() * monsters.length)];
+
+            document.getElementById("random-monster").src = `/monsterIcons/${randomMonster}`;
+        </script>
     </body>
 </html>

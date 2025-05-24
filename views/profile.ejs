@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Include common <head> elements: meta tags, CSS links, etc. -->
+        <%- include('partials/header') %>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Page title displays the current user's username -->
+        <title><%= user.username %> — Profile</title>
+    </head>
+    <body class="bg-[#BCDA94] min-h-screen flex flex-col">
+        <!-- ===== Top Navigation Bar ===== -->
+        <%- include('partials/topNavbar') %>
+
+        <!-- ===== Curved Header Background ===== -->
+        <!-- Provides the green curved header shape at the top -->
+        <header class="h-32 bg-[#BCDA94] rounded-b-3xl md:mt-16"></header>
+
+        <!-- ===== Avatar Section ===== -->
+        <!-- Positions the user's circular avatar overlapping the header -->
+        <div class="relative -mt-16 flex justify-center">
+            <div class="w-28 h-28 bg-[#F7F1E6] rounded-full p-1 border border-black">
+                <img
+                    src="<%= user.avatarUrl?.trim() ? user.avatarUrl : '/blank-pfp.webp' %>"
+                    alt="<%= user.username %>'s avatar"
+                    class="w-full h-full rounded-full object-cover"
+                />
+            </div>
+        </div>
+
+        <!-- ===== Main Content Card ===== -->
+        <!-- White foreground card containing profile details -->
+        <main class="flex-1 bg-[#F7F1E6] -mt-8 p-6 flex flex-col rounded-t-3xl">
+            <!-- Username Heading -->
+            <h1 class="text-3xl font-bold text-[#102128] text-center pt-6"><%= user.username %></h1>
+
+            <!-- ===== Streak Counter & Edit Button Row ===== -->
+            <!-- Displays today's streak and a link to edit the profile -->
+            <div class="mt-6 flex justify-center items-center space-x-4">
+                <!-- Streak Pill -->
+                <div class="flex items-center bg-[#ECB779] border border-gray-400 rounded-full px-4 py-2 space-x-2 shadow-sm">
+                    <span class="text-2xl">🔥</span>
+                    <span class="text-xl font-semibold"><%= user.streakCount %></span>
+                </div>
+                <!-- Edit Profile Pill -->
+                <a
+                    href="/profile/edit"
+                    class="flex items-center bg-white text-[#102128] border border-gray-400 rounded-full px-4 py-2 shadow-sm hover:bg-gray-100 transition"
+                >
+                    Edit Profile
+                </a>
+            </div>
+
+            <!-- ===== Decorative Divider ===== -->
+            <!-- Small, centered line under the header -->
+            <hr class="w-24 border-t-2 border-gray-300 my-6 mx-auto w-full" />
+
+            <!-- ===== Bio Section ===== -->
+            <!-- User-entered biography or placeholder text -->
+            <p class="text-center text-[#102128] text-lg"><%= user.bio || '' %></p>
+
+            <!-- ===== Summary Line ===== -->
+            <!-- Shows total tasks completed this session -->
+            <p class="mt-2 text-center text-[#102128]"><%= user.username %> completed <%= user.CompletedTasksCount %> tasks!</p>
+
+            <!-- ===== Action Buttons ===== -->
+            <!-- Buttons to open the Completed Tasks and Purchased Items modals -->
+            <div class="mt-6 flex justify-center space-x-4">
+                <button id="toggleTasks" class="px-6 py-3 bg-[#ECB779] text-white rounded-lg hover:bg-[#D9A660] transition">
+                    Show Completed Tasks
+                </button>
+                <button id="toggleItems" class="px-6 py-3 bg-[#ECB779] text-white rounded-lg hover:bg-[#D9A660] transition">
+                    Show Purchased Items
+                </button>
+            </div>
+        </main>
+
+        <!-- ===== Bottom Navigation Bar ===== -->
+        <%- include('partials/bottomNavbar') %>
+
+        <!-- ===== Completed Tasks Modal ===== -->
+        <div id="tasksModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+            <!-- Blurred backdrop overlay -->
+            <div class="absolute inset-0 backdrop-blur-md opacity-0 transition-opacity duration-200 ease-in-out"></div>
+            <!-- Modal content container -->
+            <div
+                class="relative bg-[#F7F1E6] rounded-xl p-6 max-w-md w-full max-h-full overflow-auto z-10 transform transition-transform duration-200 scale-95"
+            >
+                <!-- Modal title -->
+                <h2 class="text-2xl font-bold mb-4 text-[#102128] text-center">Completed Tasks</h2>
+                <!-- List of completed tasks -->
+                <div class="space-y-4">
+                    <% if (completedTasks.length) { %> <% completedTasks.forEach(ch => { %>
+                    <div class="bg-[#ECB779] text-[#102128] px-6 py-4 rounded-lg shadow text-center"><%= ch.name %></div>
+                    <% }) %>
+                    <% } else { %>
+                    <p class="text-center text-gray-500">No tasks completed yet.</p>
+                    <% } %>
+                </div>
+                <!-- Centered Close Button -->
+                <div class="flex justify-center mt-6">
+                    <button id="closeTasksModal" class="px-6 py-3 bg-[#ECB779] text-white text-lg rounded-lg hover:bg-[#D9A660] transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Purchased Items Modal ===== -->
+        <div id="itemsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+            <!-- Blurred backdrop overlay -->
+            <div class="absolute inset-0 backdrop-blur-md opacity-0 transition-opacity duration-200 ease-in-out"></div>
+            <!-- Modal content container -->
+            <div
+                class="relative bg-[#F7F1E6] rounded-xl p-6 max-w-lg w-full max-h-full overflow-auto z-10 transform transition-transform duration-200 scale-95"
+            >
+                <!-- Modal title -->
+                <h2 class="text-2xl font-bold mb-4 text-[#102128] text-center">Purchased Items</h2>
+                <!-- Grid of purchased item cards -->
+                <div class="space-y-4">
+                    <% if (purchasedItems.length) { %> <% purchasedItems.forEach(item => { %>
+                    <div class="bg-white rounded-lg shadow transition flex justify-evenly items-center p-4">
+                        <span class="text-[#102128]"><%= item.name %></span>
+                        <!-- <img src="<%= item.imageUrl %>" alt="<%= item.name %>" class="w-16 h-16 mb-2 object-contain" /> -->
+                    </div>
+                    <% }) %>
+                    <% } else { %>
+                    <p class="col-span-2 text-center text-gray-500">No items purchased yet.</p>
+                    <% } %>
+                </div>
+                <!-- Centered Close Button -->
+                <div class="flex justify-center mt-6">
+                    <button id="closeItemsModal" class="px-6 py-3 bg-[#ECB779] text-white text-lg rounded-lg hover:bg-[#D9A660] transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Modal Toggle Script ===== -->
+        <script>
+            (() => {
+                /**
+                 * Opens the given modal with blur and scale transitions.
+                 * @param {HTMLElement} modal
+                 */
+                const openModal = modal => {
+                    modal.classList.remove("hidden");
+                    const overlay = modal.querySelector("div.absolute");
+                    const content = modal.querySelector("div.relative");
+                    // Fade in backdrop and scale up content
+                    setTimeout(() => {
+                        overlay.classList.replace("opacity-0", "opacity-100");
+                        content.classList.replace("scale-95", "scale-100");
+                    }, 10);
+                    // Close if user clicks anywhere on the modal wrapper
+                    modal.addEventListener("click", () => closeModal(modal));
+                };
+                /**
+                 * Closes the given modal with reverse transitions.
+                 * @param {HTMLElement} modal
+                 */
+                const closeModal = modal => {
+                    const overlay = modal.querySelector("div.absolute");
+                    const content = modal.querySelector("div.relative");
+                    // Fade out backdrop and scale down content
+                    overlay.classList.replace("opacity-100", "opacity-0");
+                    content.classList.replace("scale-100", "scale-95");
+                    // Hide wrapper after transition completes
+                    setTimeout(() => modal.classList.add("hidden"), 200);
+                };
+
+                // Wire up button events to open/close modals
+                document.getElementById("toggleTasks").addEventListener("click", () => openModal(document.getElementById("tasksModal")));
+                document.getElementById("toggleItems").addEventListener("click", () => openModal(document.getElementById("itemsModal")));
+                document
+                    .getElementById("closeTasksModal")
+                    .addEventListener("click", () => closeModal(document.getElementById("tasksModal")));
+                document
+                    .getElementById("closeItemsModal")
+                    .addEventListener("click", () => closeModal(document.getElementById("itemsModal")));
+            })();
+        </script>
+    </body>
+</html>

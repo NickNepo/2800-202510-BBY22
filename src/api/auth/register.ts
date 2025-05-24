@@ -61,11 +61,18 @@ export default (app: Express, database: Db) => {
                 email,
                 passwordHash,
                 lastStreakDate: null,
-                enemyHealth: 100,
+                enemy: {
+                    "name" : "OverThinker",
+                    "image" : "/monsterIcons/overthinker.svg",
+                    "health" : 100,
+                },
                 points: 0,
                 enemyHealthModifier: 0,
                 inventory: [],
                 challengeStatuses: [],
+                CompletedTasks: [],
+                CompletedTasksCount: 0,
+                bio: "",
             } satisfies UsersSchema);
             res.send();
         } else {

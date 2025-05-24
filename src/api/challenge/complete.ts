@@ -11,45 +11,47 @@ interface ChallengeCompleteData {
     challengeId: string;
 }
 
-/**
- * Type guard to check if an object is ChallengeCompleteData.
- * @param {unknown} data - The data to validate.
- * @returns {data is ChallengeCompleteData} - True if the data matches the ChallengeCompleteData structure.
- */
+// Type guard for request payload
 function isChallengeCompleteData(data: unknown): data is ChallengeCompleteData {
     if (typeof data !== "object" || data === null) {
         return false;
     }
-
     const obj = data as Record<string, unknown>;
     return typeof obj.challengeId === "string";
 }
 
-/**
- * Registers the /api/challenge/complete endpoint to allow the user to complete challenges.
- * @param {Express} app - The Express application instance.
- * @param {Db} database - The MongoDB database instance.
- * @param {GoogleGenAI} ai - The Google GenAI instance.
- */
+// Register the /api/challenge/complete route
 export default (app: Express, database: Db, ai: GoogleGenAI) => {
-    app.post("/api/challenge/complete", async (req: Request, res: Response) => {
-        if (req.session.loggedInUserId === undefined) {
+    app.post("/api/challenge/complete", async (req: Request, res: Response): Promise<void> => {
+        // Authentication check
+        if (!req.session.loggedInUserId) {
             throw new StatusError(401, "Please authenticate first");
         }
+
+        // Validate body
         if (!isChallengeCompleteData(req.body)) {
             throw new StatusError(400, "Challenge ID is required");
         }
 
+        // Fetch current user
         let user: WithId<UsersSchema>;
         try {
             user = await getCurrentUser(database, new ObjectId(req.session.loggedInUserId));
-        } catch(_) {
+        } catch {
             throw new StatusError(500, "Error finding user in database");
         }
 
         const { challengeId } = req.body;
 
+        // Core challenge-completion logic
         const challengeCompleteData = await completeChallenge(user, database, challengeId, ai);
+
+        // Persist to MongoDB
+        await database
+            .collection("users")
+            .updateOne({ _id: user._id }, { $addToSet: { CompletedTasks: challengeId }, $inc: { CompletedTasksCount: 1 } });
+
+        // Respond with data
         res.json(challengeCompleteData);
     });
 };

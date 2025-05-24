@@ -2,24 +2,88 @@
 <html lang="en">
     <head>
         <%- include('../partials/header') %>
-        <title>Settings - About</title>
+        <title>Settings - Account</title>
     </head>
-    <body>
-        <div>
-            <a href="/settings"><i class="bx bx-arrow-back"></i></a>
-        </div>
-        <h1>Account</h1>
-        <div class="container">
-            <h2>Change Username</h2>
-            <form id="usernameForm">
-                <input name="username" />
-                <button name="usernameSubmit">Submit</button>
+    <body class="bg-quietquest-gold font-afacad flex items-center justify-center min-h-screen px-4">
+        <div class="bg-[#426f8a] text-white w-full max-w-md rounded-4xl shadow-lg my-5 p-8">
+            <div class="text-sm text-white mb-4">
+                <a href="/settings" class="hover:underline">&larr; Go back</a>
+            </div>
+            <h1 class="text-quietquest-cream font-combo text-center text-2xl mb-6">Account Settings</h1>
+
+            <form id="usernameForm" class="space-y-4">
+                <h2 class="text-lg font-combo text-quietquest-cream mb-2">Change Username</h2>
+                <input
+                    name="username"
+                    type="text"
+                    placeholder="New Username"
+                    class="w-full px-5 py-3 rounded-full bg-quietquest-cream placeholder-gray-400 text-quietquest-dark focus:outline-none focus:ring-2 focus:ring-white transition"
+                />
+                <button
+                    type="submit"
+                    class="w-full py-3 rounded-full bg-quietquest-green hover:bg-quietquest-dark-gold text-quietquest-dark font-semibold transition"
+                >
+                    Update Username
+                </button>
+            </form>
+
+            <hr class="border-t border-quietquest-cream opacity-50 my-6" />
+
+            <form id="passwordForm" class="space-y-4">
+                <h2 class="text-lg font-combo text-quietquest-cream mb-2">Change Password</h2>
+                <label for="password" class="block text-sm font-medium text-quietquest-cream font-combo mb-1">Current Password</label>
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Current Password"
+                    class="w-full px-5 py-3 rounded-full bg-quietquest-cream placeholder-gray-400 text-quietquest-dark focus:outline-none focus:ring-2 focus:ring-white transition"
+                />
+                <label for="passwordNew" class="block text-sm font-medium text-quietquest-cream font-combo mb-1">New Password</label>
+                <input
+                    name="passwordNew"
+                    type="password"
+                    placeholder="New Password"
+                    class="w-full px-5 py-3 rounded-full bg-quietquest-cream placeholder-gray-400 text-quietquest-dark focus:outline-none focus:ring-2 focus:ring-white transition"
+                />
+                <label for="passwordNewValidate" class="block text-sm font-medium text-quietquest-cream font-combo mb-1"
+                    >Confirm Password</label
+                >
+                <input
+                    name="passwordNewValidate"
+                    type="password"
+                    placeholder="Confirm New Password"
+                    class="w-full px-5 py-3 rounded-full bg-quietquest-cream placeholder-gray-400 text-quietquest-dark focus:outline-none focus:ring-2 focus:ring-white transition"
+                />
+                <button
+                    type="submit"
+                    class="w-full py-3 rounded-full bg-quietquest-green hover:bg-quietquest-dark-gold text-quietquest-dark font-semibold transition"
+                >
+                    Update Password
+                </button>
+            </form>
+
+            <hr class="border-t border-quietquest-cream opacity-50 my-6" />
+
+            <form id="deleteAccountForm" class="space-y-4">
+                <h2 class="text-lg font-combo text-quietquest-cream mb-2">Delete Account</h2>
+                <label for="passwordDelete" class="block text-sm font-medium text-quietquest-cream font-combo mb-1">Current Password</label>
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Current Password"
+                    class="w-full px-5 py-3 rounded-full bg-quietquest-cream placeholder-gray-400 text-quietquest-dark focus:outline-none focus:ring-2 focus:ring-white transition"
+                />
+                <button type="submit" class="w-full py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold transition">
+                    Delete Account
+                </button>
             </form>
         </div>
 
         <script type="module">
             import formSend from "/js/formSend.js";
-            formSend("/api/account/setUsername", document.getElementById("usernameForm"), "/");
+            formSend("/api/account/setUsername", document.getElementById("usernameForm"), "/settings/account");
+            formSend("/api/account/setPassword", document.getElementById("passwordForm"), "/settings/account");
+            formSend("/api/account/deleteAccount", document.getElementById("deleteAccountForm"), "/");
         </script>
     </body>
 </html>

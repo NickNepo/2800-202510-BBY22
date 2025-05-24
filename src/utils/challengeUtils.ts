@@ -297,16 +297,16 @@ async function getUserChallenges(user: WithId<UsersSchema>, database: Db, ai: Go
  * @returns {Promise<ChallengeCompleteData>} An promise indicating the completion of the operation, and resolves to ChallengeCompleteData.
  * @throws Will throw an error if the user is not authenticated, not found, has invalid data, or if there is not a challenge with the given ID.
  */
-async function completeChallenge(user: WithId<UsersSchema>, database: Db, challengeId: string, ai: GoogleGenAI): Promise<ChallengeCompleteData> {
+async function completeChallenge(
+    user: WithId<UsersSchema>,
+    database: Db,
+    challengeId: string,
+    ai: GoogleGenAI,
+): Promise<ChallengeCompleteData> {
     let status = user.challengeStatuses.find(status => status.challengeId === challengeId);
     if (status === undefined) {
         const challenges = await getAllChallenges(database, ai);
-        user.challengeStatuses = await updateUserChallengeStatuses(
-            database,
-            user._id,
-            user.challengeStatuses,
-            challenges,
-        );
+        user.challengeStatuses = await updateUserChallengeStatuses(database, user._id, user.challengeStatuses, challenges);
         status = user.challengeStatuses.find(status => status.challengeId === challengeId);
         if (status === undefined) {
             throw new StatusError(400, "No challenge with the given ID found");

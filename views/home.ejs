@@ -6,147 +6,170 @@
     </head>
 
     <body class="bg-quietquest-green font-afacad pb-20">
-        <!-- Add bottom padding so bottom nav doesn't cover content -->
         <%- include('partials/topNavbar') %>
 
-        <!-- Spot where modal is dynamically created -->
+        <!-- AI was used to change the old style.css to tailwind -->
+
+        <!-- Spot where modal is dynamically created (still used by challenges.js) -->
         <div id="modal-container"></div>
 
-        <!-- Main content -->
         <main class="pt-8 md:pt-20 px-4">
-            <!-- Streaks Button -->
+            <!-- Streak widget -->
             <div class="mb-6">
                 <button
                     id="open-streaks"
                     class="bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] font-bold px-4 py-2 rounded-full shadow flex items-center space-x-2"
                 >
                     <span>🔥</span>
-                    <span>Streaks</span>
+                    <span>
+                        <%= user.streakCount %>
+                    </span>
                 </button>
             </div>
 
-            <!-- Streaks Modal -->
-            <div id="streaks-modal" class="fixed inset-0 bg-[var(--color-quietquest-gold)] bg-opacity-100 z-50 hidden">
-                <div class="p-4">
-                    <!-- Go Back Button -->
-                    <button id="close-streaks" class="text-[var(--color-quietquest-dark)] font-bold text-lg flex items-center space-x-2">
-                        <span>🔙</span>
-                        <span>Go Back</span>
-                    </button>
-
-                    <!-- Content -->
-                    <div class="mt-10 text-center text-[var(--color-quietquest-dark)] text-3xl font-bold">🔥 Your Streaks!</div>
-                </div>
-            </div>
-
             <!-- Monster Info Section -->
-            <div id="monster-section" class="contains-monster-info flex flex-col items-center space-y-4 mb-10">
-                <!-- White Circle -->
-                <div class="w-32 h-32 rounded-full bg-white"></div>
+            <div id="monster-section" class="flex flex-col items-center space-y-4 mb-10">
+                <!-- Monster Image -->
+                <div
+                    class="w-56 h-56 mb-5 rounded-full bg-[var(--color-quietquest-cream)] overflow-hidden flex items-center justify-center"
+                >
+                    <% if (monster) { %>
+                    <img src="<%= monster.image %>" alt="<%= monster.name %>" class="w-3/4 h-3/4" />
+                    <% } else { %>
+                    <div class="text-[var(--color-quietquest-dark)]">No monster to show</div>
+                    <% } %>
+                </div>
 
                 <!-- Monster Name -->
-                <div class="w-48 h-10 bg-white rounded shadow flex items-center justify-center font-bold text-quietquest-dark">
-                    Monster Name
+                <div class="inline-block bg-[var(--color-quietquest-cream)] px-6 py-3 mb-5 rounded-2xl">
+                    <div class="text-[var(--color-quietquest-dark)] text-xl tracking-wide text-center">
+                        <%= monster ? monster.name : "No encounters so far..." %>
+                    </div>
                 </div>
 
                 <!-- Points -->
-                <div class="text-lg text-quietquest-dark font-semibold">Points: <span class="user-points-display"><%= user.points %></span></div>
+                <div class="text-lg text-quietquest-dark font-semibold">
+                    Points: <span id="usersPoints" class="user-points-display"><%= user.points %></span>
+                </div>
 
                 <!-- Fight Button -->
                 <button
                     id="fight-button"
-                    class="bg-[var(--color-quietquest-blue)] text-[var(--color-quietquest-cream)] px-6 py-2 rounded shadow"
+                    class="bg-quietquest-blue text-quietquest-cream px-8 py-3 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform"
                 >
-                    Fight
+                    <span class="text-xl tracking-wider">Fight</span>
                 </button>
 
-                <!-- Health Bar (hidden by default) -->
-                <div id="health-bar" class="w-48 h-4 bg-red-500 rounded hidden"></div>
-
-                <!-- Battle Menu (hidden by default) -->
-                <div id="battle-menu" class="flex flex-col items-center space-y-2 mt-4 hidden">
-                    <button
-                        id="attack-button"
-                        class="bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] px-6 py-2 rounded shadow"
-                    >
-                        Attack
-                    </button>
-                    <button
-                        id="items-button"
-                        class="bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] px-6 py-2 rounded shadow"
-                    >
-                        Items
-                    </button>
-                    <button id="go-back-button" class="bg-gray-300 text-black px-6 py-2 rounded shadow">Go Back</button>
+                <!-- Health Bar -->
+                <div id="health-bar" class="flex items-center space-x-2 hidden px-6 py-6">
+                    <img src="/monsterIcons/heart.svg" alt="Health" class="w-6 h-6" />
+                    <div class="relative w-64 h-6 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="health-fill" class="h-full bg-green-500 rounded-full border" style="width: 100%"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">
+                            <span id="health-text">100%</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Attack Menu -->
+                <!-- Battle Menu -->
+                <div id="battle-menu" class="flex flex-col items-center space-y-3 mt-4 hidden">
+                    <div class="flex space-x-4">
+                        <!-- Attack Button -->
+                        <button
+                            id="attack-button"
+                            class="relative bg-[var(--color-quietquest-blue)] text-[var(--color-quietquest-cream)] px-6 py-3 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform w-32"
+                        >
+                            <div class="font-medium tracking-wider">Attack</div>
+                            <div class="text-[10px] leading-tight mt-0.5 font-medium">(Damage = Your Points)</div>
+                        </button>
+
+                        <!-- Items Button -->
+                        <button
+                            id="items-button"
+                            class="bg-[var(--color-quietquest-blue)] text-[var(--color-quietquest-cream)] px-6 py-3 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform w-32 font-medium tracking-wider"
+                        >
+                            Items
+                        </button>
+                    </div>
+
+                    <!-- Go Back from Battle -->
+                    <button
+                        id="go-back-button"
+                        class="bg-quietquest-cream text-quietquest-dark px-6 py-2 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform w-full max-w-[272px]"
+                    >
+                        GO BACK
+                    </button>
+                </div>
+
+                <!-- Attack Menu (unused) -->
                 <div id="attack-menu" class="hidden">
-                    <a id="attack-go-back" class="go-back-button text-left text-sm text-blue-600 font-bold">← Go Back</a>
+                    <a id="attack-go-back" class="go-back-button text-left text-sm text-blue-600 font-bold"> ← Go Back </a>
                     <div class="mt-2">Attack menu goes here...</div>
                 </div>
 
-                <!-- Items Menu -->
-                <div id="items-menu" class="hidden">
-                    <a id="items-go-back" class="go-back-button text-left text-sm text-blue-600 font-bold">← Go Back</a>
-                    <div class="mt-2">Items menu goes here...</div>
-                </div>
-            </div>
+                <!-- Inventory Menu (slides in under battle menu) -->
+                <div
+                    id="items-menu"
+                    class="hidden flex flex-col items-center space-y-4 bg-[var(--color-quietquest-gold)] p-6 rounded-2xl shadow max-h-96 overflow-y-auto"
+                >
+                    <!-- Back arrow -->
+                    <button id="items-go-back" class="text-[var(--color-quietquest-dark)] font-bold text-lg self-start">← Back</button>
 
-            <!-- Goals Section (will be hidden during battle) -->
-            <div id="goals-section" class="goals space-y-4">
-                <!-- Goals Header -->
-                <div class="flex justify-between items-center">
-                    <p class="text-xl text-quietquest-dark font-bold">Goals</p>
-                    <button class="bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] px-4 py-1 rounded shadow">
-                        Filter
+                    <!-- Inventory Items List (nicer buttons) -->
+                    <% if (inventoryItems.length) { %>
+                    <% inventoryItems.forEach(item=> { %>
+                    <button
+                        data-item-id="<%= item.id %>"
+                        class="w-full bg-[var(--color-quietquest-cream)] text-[var(--color-quietquest-dark)] px-4 py-2 rounded-lg shadow-md flex justify-between items-center transform transition-all duration-150 ease-out hover:scale-105 hover:shadow-lg active:scale-95 active:bg-gray-200/50 focus:outline-none focus:ring-2 focus:ring-[var(--color-quietquest-blue)]"
+                    >
+                        <span class="font-medium"> <%= item.name %> </span>
+                        <% if (typeof item.quantity !=='undefined' ) { %>
+                        <span class="text-sm font-semibold">x<%= item.quantity %></span>
+                        <% } %>
                     </button>
+                    <% }) %>
+                    <% } else { %>
+                    <p class="text-[var(--color-quietquest-dark)]">You have no items.</p>
+                    <% } %>
                 </div>
 
-                <!-- Goal Items -->
-                <div id="goal-container" class="flex flex-col space-y-4">
-                    <% challenges.forEach(challenge => { %>
-                    <% if (!challenge.completed) { %>
-                    <div
-                        id="challenge-<%= challenge._id %>"
-                        class="flex justify-between items-center bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] text-lg px-6 py-4 rounded-2xl shadow cursor-pointer hover:scale-[1.01] transition-transform"
-                    >
-                        <span class="challenge-name"><%= challenge.name %></span>
-                        <span class="bg-[var(--color-quietquest-cream)] text-sm px-3 py-1 rounded-full shadow"
-                            ><%= challenge.pointReward %> pts</span
-                        >
+                <!-- Goals Section (wider & lower) -->
+                <div id="goals-section" class="goals space-y-4 w-[30rem] max-h-[32rem] overflow-y-auto mt-8">
+                    <div class="flex justify-between items-center">
+                        <p class="text-xl text-quietquest-dark font-bold">Goals</p>
+                        <div class="bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] px-4 py-1 rounded shadow">
+                            <%= `${user.CompletedTasksCount}/${challenges.length} Completed` %>
+                        </div>
                     </div>
-                    <% } else { %>
-                    <div
-                        id="challenge-<%= challenge._id %>"
-                        class="flex justify-between items-center bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] text-lg px-6 py-4 rounded-2xl shadow cursor-pointer opacity-60 hover:scale-[1.01] transition-transform"
-                    >
-                        <span class="challenge-name line-through"><%= challenge.name %></span>
-                        <span class="bg-[var(--color-quietquest-cream)] text-sm px-3 py-1 rounded-full shadow"
-                            ><%= challenge.pointReward %> pts</span
+
+                    <div id="goal-container" class="flex flex-col space-y-4">
+                        <% challenges.forEach(challenge=> { %>
+                        <div
+                            id="challenge-<%= challenge._id %>"
+                            class="flex justify-between items-center bg-[var(--color-quietquest-gold)] text-[var(--color-quietquest-dark)] text-lg px-6 py-4 rounded-2xl shadow <% if (challenge.completed) { %>opacity-60<% } %> hover:scale-[1.01] transition-transform"
                         >
+                            <span class="challenge-name <% if (challenge.completed) { %>line-through<% } %>"> <%= challenge.name %> </span>
+                            <span class="bg-[var(--color-quietquest-cream)] text-sm px-3 py-1 rounded-full shadow">
+                                <%= challenge.pointReward %> pts
+                            </span>
+                        </div>
+                        <% }) %>
                     </div>
-                    <% } %>
-                    <% }); %>
                 </div>
             </div>
         </main>
+
         <%- include('partials/bottomNavbar') %>
+
         <script src="/js/battle.js"></script>
         <script type="module">
             import initializeChallenges from "/js/challenges.js";
-
             const challenges = JSON.parse(`<%- JSON.stringify(challenges) %>`);
-            // Add div property to each challenge object
             challenges.forEach(challenge => {
                 challenge.div = document.getElementById(`challenge-${challenge._id}`);
                 challenge.nameSpan = challenge.div.querySelector(".challenge-name");
             });
-
-            // Get the spot where modals will be created
             const modalContainer = document.getElementById("modal-container");
-
-            // Set up event listeners for challenge divs
             initializeChallenges(challenges, modalContainer);
         </script>
     </body>

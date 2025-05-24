@@ -37,6 +37,7 @@ export default (app: Express, database: Db) => {
         }
 
         const newEnemyStatus = await damageEnemy(req, database, req.body.damage);
+        console.log("enemy damaged");
         res.json(newEnemyStatus);
     });
 };

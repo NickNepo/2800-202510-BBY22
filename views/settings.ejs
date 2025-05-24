@@ -3,31 +3,63 @@
     <head>
         <%- include('partials/header') %>
         <title>Settings</title>
+        <style>
+            /* Custom spacing for web layout */
+            @media (min-width: 768px) {
+                body {
+                    padding-top: 4rem;
+                }
+            }
+        </style>
     </head>
+    <body class="bg-quietquest-gold font-afacad flex items-center justify-center min-h-screen px-4">
+        <%- include('partials/topNavbar') %>
 
-    <body>
-        <h1>Settings</h1>
-        <a href="/settings/account">
-            <div>
-                <h2>Account</h2>
-                <p>Options regarding your QuietQuest account.</p>
-            </div>
-        </a>
-        <a href="/settings/appearance">
-            <div>
-                <h2>Appearance</h2>
-                <p>Options for changing the app appearance and theme.</p>
-            </div>
-        </a>
-        <a href="/settings/about">
-            <div>
-                <h2>About</h2>
-                <p>Details about our app and the developers.</p>
-            </div>
-        </a>
-        <form id="logoutForm">
-            <button>Logout</button>
-        </form>
+        <div class="bg-[#426f8a] text-quietquest-cream w-full max-w-md rounded-4xl shadow-lg p-8 space-y-6 mt-5 mb-20">
+            <h1 class="text-quietquest-cream font-combo text-center text-2xl">Settings</h1>
+
+            <a
+                href="/settings/account"
+                class="block bg-quietquest-green text-quietquest-dark rounded-xl p-4 hover:bg-quietquest-cream transition"
+            >
+                <h2 class="font-combo text-lg mb-1 text-center">Account</h2>
+                <p class="text-sm text-center">Options regarding your QuietQuest account.</p>
+            </a>
+
+            <a href="/about" class="block bg-quietquest-green text-quietquest-dark rounded-xl p-4 hover:bg-quietquest-cream transition">
+                <h2 class="font-combo text-lg mb-1 text-center">About</h2>
+                <p class="text-sm text-center">Details about our app and the developers.</p>
+            </a>
+
+            <a href="/" class="block bg-quietquest-green text-quietquest-dark rounded-xl p-4 hover:bg-quietquest-cream transition">
+                <h2 class="font-combo text-lg mb-1 text-center">Home</h2>
+                <p class="text-sm text-center">Return to the homepage.</p>
+            </a>
+
+            <a href="/shop" class="block bg-quietquest-green text-quietquest-dark rounded-xl p-4 hover:bg-quietquest-cream transition">
+                <h2 class="font-combo text-lg mb-1 text-center">Shop</h2>
+                <p class="text-sm text-center">Browse the item shop.</p>
+            </a>
+
+            <a href="/profile" class="block bg-quietquest-green text-quietquest-dark rounded-xl p-4 hover:bg-quietquest-cream transition">
+                <h2 class="font-combo text-lg mb-1 text-center">Profile</h2>
+                <p class="text-sm text-center">View your profile.</p>
+            </a>
+
+            <hr class="border-t border-quietquest-cream opacity-50" />
+
+            <form id="logoutForm" class="mt-4">
+                <button
+                    type="submit"
+                    class="w-full py-3 rounded-full bg-quietquest-cream hover:bg-quietquest-gold text-quietquest-dark font-semibold transition"
+                >
+                    Logout
+                </button>
+            </form>
+        </div>
+
+        <%- include("partials/bottomNavbar") %>
+
         <script type="module">
             import formSend from "/js/formSend.js";
             formSend("/api/auth/logout", document.getElementById("logoutForm"), "/");

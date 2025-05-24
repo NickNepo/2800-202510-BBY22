@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-quietquest-gold">
     <head>
         <%- include('partials/header') %>
         <title>QuietQuest — Shop</title>
@@ -10,6 +10,7 @@
                     opacity: 0;
                     transform: translateY(-20px);
                 }
+
                 10%,
                 90% {
                     opacity: 1;
@@ -22,7 +23,7 @@
     <body class="bg-quietquest-gold font-afacad min-h-screen relative">
         <!-- Header -->
         <%- include('partials/topNavbar') %>
-        <header class="bg-quietquest-blue text-quietquest-cream text-center py-8">
+        <header class="bg-quietquest-blue text-quietquest-cream text-center py-8 md:mt-14">
             <h1 class="font-combo text-4xl">Shop</h1>
             <p class="mt-2 text-lg">Browse our treasures</p>
         </header>
@@ -53,27 +54,31 @@
 
         <!-- Items Grid -->
         <main class="p-4 grid grid-cols-2 gap-4">
-            <% items.forEach((item, idx) => { %>
-            <div class="relative bg-quietquest-blue/70 rounded-2xl shadow-lg p-5 flex flex-col items-center">
-                <!-- Image -->
-                <div class="bg-quietquest-cream/50 rounded-full p-4 mb-3">
-                    <img src="<%= item.imageUrl %>" alt="<%= item.name %>" class="w-16 h-16 object-cover" />
+            <% items.forEach((item, idx)=> { %>
+            <div class="relative bg-quietquest-blue rounded-2xl shadow-lg p-5 flex flex-col items-center h-full">
+                <div class="flex-grow flex flex-col items-center mb-4">
+                    <!-- Image -->
+                    <div class="bg-quietquest-cream/50 rounded-full p-4 mb-3 w-fit">
+                        <img src="<%= item.image %>" alt="<%= item.name %>" class="w-16 h-16 object-cover" />
+                    </div>
+                    <!-- Name & Description -->
+                    <h2 class="text-quietquest-cream font-semibold text-center mb-1"><%= item.name %></h2>
+                    <p class="text-quietquest-cream text-center text-sm mb-2"><%= item.description %></p>
+
+                    <!-- Price -->
+                    <!-- Centered Price (new wrapper div) -->
+                    <div class="mt-auto w-full text-center">
+                        <span class="text-quietquest-green font-medium mb-4"> <%= item.price %> pts </span>
+                    </div>
                 </div>
-                <!-- Name & Description -->
-                <h2 class="text-white font-semibold text-center mb-1"><%= item.name %></h2>
-                <p class="text-white text-center text-sm mb-2"><%= item.description %></p>
-
-                <!-- Price -->
-                <span class="text-white font-medium mb-4"><%= item.price %> pts</span>
-
                 <!-- CSS-only Confirmation Dialog -->
                 <form action="/api/shop/buy" method="POST" class="w-full">
-                    <input type="hidden" name="itemName" value="<%= item.name %>" />
+                    <input type="hidden" name="itemId" value="<%= item._id %>" />
                     <input id="confirm-<%= idx %>" type="checkbox" class="peer hidden" />
 
                     <label
                         for="confirm-<%= idx %>"
-                        class="w-full py-2 block text-center bg-quietquest-green hover:bg-quietquest-dark-gold text-quietquest-dark rounded-md font-semibold transition-colors cursor-pointer"
+                        class="w-full py-2 block text-center bg-quietquest-cream hover:bg-quietquest-dark-gold text-quietquest-dark rounded-md font-semibold transition-colors cursor-pointer"
                     >
                         Buy
                     </label>
@@ -84,20 +89,18 @@
                         <div class="bg-quietquest-cream rounded-lg shadow-lg p-6 max-w-xs w-full mx-4">
                             <p class="text-quietquest-dark text-center mb-4">
                                 Are you sure you want to buy
-                                <span class="font-semibold"><%= item.name %></span>?
+                                <span class="font-semibold"> <%= item.name %> </span>?
                             </p>
                             <div class="flex justify-around">
-                                <!-- Yes submits -->
-                                <button type="submit" class="px-4 py-2 bg-quietquest-green text-quietquest-dark rounded-md cursor-pointer">
-                                    Yes
-                                </button>
-                                <!-- No closes -->
                                 <label
                                     for="confirm-<%= idx %>"
                                     class="px-4 py-2 bg-quietquest-dark-gold text-quietquest-dark rounded-md cursor-pointer"
                                 >
                                     No
                                 </label>
+                                <button type="submit" class="px-4 py-2 bg-quietquest-green text-quietquest-dark rounded-md cursor-pointer">
+                                    Yes
+                                </button>
                             </div>
                         </div>
                     </div>

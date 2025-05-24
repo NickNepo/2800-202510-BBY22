@@ -72,7 +72,7 @@ function createModal(challenge: ChallengeInfo): Modal {
     modalContent.appendChild(pointsElem);
 
     const pointsStrong = document.createElement("strong");
-    pointsStrong.textContent = "Points:";
+    pointsStrong.textContent = "Points: ";
     pointsElem.appendChild(pointsStrong);
 
     const pointsSpan = document.createElement("span");

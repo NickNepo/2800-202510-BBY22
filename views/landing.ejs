@@ -10,8 +10,8 @@
     <body class="bg-quietquest-green font-afacad">
         <!-- Navbar -->
         <!-- AI fixed the navbar layout issue (there was overlap between the left side and right side of the links) -->
-        <nav class="fixed top-0 z-50 flex w-full bg-quietquest-blue text-quietquest-cream shadow-md py-6" id="navbar">
-            <div class="flex justify-between items-center w-full px-6">
+        <nav class="fixed top-0 z-50 flex w-full bg-quietquest-blue text-quietquest-cream shadow-md" id="navbar">
+            <div class="flex justify-between items-center w-full py-6 px-6">
                 <!-- QuietQuest Logo -->
                 <div class="flex items-center">
                     <img src="/quietQuestIcons/Logo Wide.svg" alt="Quiet Quest Logo" class="h-10 w-auto object-contain" />
@@ -21,30 +21,17 @@
                 <ul class="hidden md:flex flex-row items-center space-x-6">
                     <li>
                         <div class="flex items-center space-x-2">
-                            <img
-                                class="h-6 w-6 object-contain hidden lg:inline"
-                                src="/quietQuestIcons/opened-door-aperture.png"
-                                alt="openDoor"
-                            />
                             <a href="#overview" class="whitespace-nowrap">Getting Started</a>
                         </div>
                     </li>
                     <li>
                         <div class="flex items-center space-x-2">
-                            <img class="h-6 w-6 object-contain hidden lg:inline" src="/quietQuestIcons/tool.png" alt="tool" />
                             <a href="#features">Features</a>
                         </div>
                     </li>
                     <li>
                         <div class="flex items-center space-x-2">
-                            <img class="h-6 w-6 object-contain hidden lg:inline" src="/quietQuestIcons/information.png" alt="information" />
                             <a href="#about" class="whitespace-nowrap">About Us</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="flex items-center space-x-2">
-                            <img class="h-6 w-6 object-contain hidden lg:inline" src="/quietQuestIcons/phone.png" alt="phone" />
-                            <a href="#contact">Contact</a>
                         </div>
                     </li>
                 </ul>
@@ -52,13 +39,9 @@
                 <!-- Right: Login Button (always visible), Hamburger (mobile only) -->
                 <div class="flex items-center space-x-4">
                     <!-- Mobile Hamburger -->
-                    <button
-                        id="mobile-menu-button"
-                        class="md:hidden text-3xl focus:outline-none mx-auto"
-                        aria-label="Toggle menu"
-                        aria-expanded="false"
-                    >
-                        ☰
+                    <!-- Hamburger Toggle Button with Image -->
+                    <button id="mobile-menu-button" class="md:hidden focus:outline-none" aria-label="Toggle menu" aria-expanded="false">
+                        <img id="hamburger-icon" src="/quietQuestIcons/hamburger.svg" alt="Menu" class="h-8 w-8" />
                     </button>
 
                     <!-- Login Button -->
@@ -71,54 +54,31 @@
                 </div>
             </div>
 
-            <!-- Mobile Menu Dropdown -->
-            <div id="mobile-menu" class="hidden md:hidden bg-quietquest-blue-darker w-full px-6 py-4 space-y-4">
-                <div class="flex flex-col space-y-6">
-                    <!-- Getting Started -->
+            <!-- Mobile Menu (in your existing HTML) -->
+            <div id="mobile-menu" class="hidden absolute left-0 top-full w-full bg-quietquest-blue px-6 py-4 space-y-4 md:hidden">
+                <div class="flex flex-col items-start space-y-4">
                     <a
+                        id="mobile-getting-started"
                         href="#overview"
-                        class="flex items-center space-x-2 text-lg hover:bg-quietquest-blue/30 px-2 py-1 rounded transition-colors"
+                        class="text-left w-full text-lg hover:bg-quietquest-blue/30 px-2 py-1 rounded"
+                        >Getting Started</a
                     >
-                        <img class="h-6 w-6 object-contain" src="/quietQuestIcons/opened-door-aperture.png" alt="openDoor" />
-                        <span>Getting Started</span>
-                    </a>
+                    <a id="mobile-features" href="#features" class="text-left w-full text-lg hover:bg-quietquest-blue/30 px-2 py-1 rounded"
+                        >Features</a
+                    >
+                    <a id="mobile-about" href="#about" class="text-left w-full text-lg hover:bg-quietquest-blue/30 px-2 py-1 rounded"
+                        >About Us</a
+                    >
 
-                    <!-- Features -->
-                    <a
-                        href="#features"
-                        class="flex items-center space-x-2 text-lg hover:bg-quietquest-blue/30 px-2 py-1 rounded transition-colors"
-                    >
-                        <img class="h-6 w-6 object-contain" src="/quietQuestIcons/tool.png" alt="tool" />
-                        <span>Features</span>
-                    </a>
-
-                    <!-- About Us -->
-                    <a
-                        href="#about"
-                        class="flex items-center space-x-2 text-lg hover:bg-quietquest-blue/30 px-2 py-1 rounded transition-colors"
-                    >
-                        <img class="h-6 w-6 object-contain" src="/quietQuestIcons/information.png" alt="information" />
-                        <span>About Us</span>
-                    </a>
-
-                    <!-- Contact -->
-                    <a
-                        href="#contact"
-                        class="flex items-center space-x-2 text-lg hover:bg-quietquest-blue/30 px-2 py-1 rounded transition-colors"
-                    >
-                        <img class="h-6 w-6 object-contain" src="/quietQuestIcons/phone.png" alt="phone" />
-                        <span>Contact</span>
-                    </a>
-                </div>
-
-                <!-- Login/Sign Up Button -->
-                <div class="pt-4 border-t border-quietquest-cream/20 mt-4">
-                    <a
-                        href="/login"
-                        class="block w-full px-4 py-3 text-center bg-quietquest-gold text-quietquest-dark rounded-md no-underline font-afacad text-base hover:bg-quietquest-dark-gold transition-colors duration-200"
-                    >
-                        Login / Sign Up
-                    </a>
+                    <div class="pt-4 border-t border-quietquest-cream/20 mt-4 w-full">
+                        <a
+                            id="mobile-login"
+                            href="/login"
+                            class="block w-full px-4 py-3 text-left bg-quietquest-gold text-quietquest-dark rounded-md font-afacad text-base hover:bg-quietquest-dark-gold transition-colors duration-200"
+                        >
+                            Login / Sign Up
+                        </a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -145,7 +105,7 @@
         </div>
 
         <!-- Div Container for Overview Section -->
-        <div class="py-24 mt-48 mb-48 px-6" id="overview">
+        <div class="py-24 mt-48 px-6" id="overview">
             <div class="max-w-4xl mx-auto text-center space-y-16">
                 <!-- Overview Title -->
                 <h2 class="font-combo text-quietquest-dark text-4xl">Getting Started</h2>
@@ -153,70 +113,82 @@
                     <!-- Overview Text and Image 1 -->
                     <h3 class="text-2xl text-quietquest-dark">🧭 Step 1: Begin Your Daily Quest</h3>
                     <p class="font-afacad text-quietquest-dark">
-                        Each day, QuietQuest gives you a personalized task or self-care challenge designed to build healthy habits and
+                        Each day, QuietQuest generates you three task or self-care challenges designed to build healthy habits and
                         mindfulness.
                     </p>
-                    <img src="./images/Inspiration1.png" alt="inspiration" class="mx-auto" />
+                    <img class="mx-auto my-4 p-2" src="/overviewImages/task.png" alt="Overview" />
                 </div>
                 <!-- Overview Text and Image 2 -->
                 <div class="space-y-6">
                     <h3 class="text-2xl text-quietquest-dark">🐉 Step 2: Face a Monster</h3>
                     <p class="font-afacad text-quietquest-dark">
-                        Each day, you'll encounter a themed monster—like Bed-Rot or Interrorgator. Choose how to "fight" based on your
-                        real-world action and earn rewards.
+                        Each day, you'll encounter a themed monster—like Mr. Burnout or The Overthinker. You can choose to fight these
+                        creatures and attack them.
                     </p>
-                    <img src="./images/Inspiration2.png" alt="inspiration" />
+                    <!-- Monster 1: Mr. Burnout -->
+                    <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow space-y-3">
+                        <div class="text-lg font-bold text-quietquest-dark">Mr. Burnout</div>
+                        <img class="w-24 h-24" src="/monsterIcons/mrburnout.svg" alt="Mr. Burnout" />
+                        <img class="w-28 h-auto" src="/overviewImages/fight.png" alt="Fight Button" />
+                    </div>
+
+                    <!-- Monster 2: The Overthinker -->
+                    <div class="flex flex-col items-center p-4 bg-white rounded-xl shadow space-y-3">
+                        <div class="text-lg font-bold text-quietquest-dark">The Overthinker</div>
+                        <img class="w-24 h-24" src="/monsterIcons/overthinker.svg" alt="The Overthinker" />
+                        <img class="w-28 h-auto" src="/overviewImages/fight.png" alt="Fight Button" />
+                    </div>
                 </div>
                 <!-- Overview Text and Image 3 -->
                 <div class="space-y-6">
                     <h3 class="text-2xl text-quietquest-dark">✨ Step 3: Earn Gold & Build Your Streak</h3>
                     <p class="font-afacad text-quietquest-dark">
-                        Keep your streak alive by logging in daily. Defeating monsters grants gold, which you can use to unlock items,
-                        upgrade your profile, and power up your quests.
+                        Keep your streak alive by logging in daily. Defeating monsters grants gold, which you can use to unlock items and
+                        power up your damage.
                     </p>
-                    <img src="./images/Inspiration3.png" alt="inspiration" />
+                    <img class="mx-auto my-4 p-2" src="/overviewImages/streaks.png" alt="Overview" />
                 </div>
             </div>
         </div>
 
         <!-- Div Container for Features Section -->
-        <div class="bg-quietquest-gold py-24 mt-48 mb-48 px-6" id="features">
+        <div class="bg-quietquest-gold py-24 px-6" id="features">
             <div class="max-w-4xl mx-auto text-center space-y-16">
                 <!-- Features Title -->
                 <h2 class="font-combo text-quietquest-dark text-4xl">Features</h2>
                 <!-- Features Text and Image 1 -->
                 <div class="space-y-6">
-                    <h3 class="text-2xl text-quietquest-dark">🛡️ Personalized Hero Paths</h3>
+                    <h3 class="text-2xl text-quietquest-dark">🤖 AI Generated Daily Tasks</h3>
                     <p class="font-afacad text-quietquest-dark">
-                        Choose your self-help focus—like productivity, mindfulness, or energy—and get tasks and monsters tailored to your
-                        path.
+                        Our tasks are generated by AI. Click on a task to view its details, then choose to complete or close it. Completing
+                        tasks earns you points, which accumulate over time. When you enter battle, your total points are used as damage to
+                        help you defeat monsters.
                     </p>
-                    <img src="./images/Feature1.png" alt="Feature" />
+                    <img class="mx-auto my-4 p-2" src="/featureImages/feature1-AI-desc.png" alt="Feature" />
                 </div>
                 <!-- Features Text and Image 2 -->
                 <div class="space-y-6">
-                    <h3 class="text-2xl text-quietquest-dark">👥 Community Quests</h3>
+                    <h3 class="text-2xl text-quietquest-dark">🛒 In Game Shop</h3>
                     <p class="font-afacad text-quietquest-dark">
-                        Team up with friends or others on similar journeys. Join seasonal events to slay bigger monsters and unlock rare
-                        items.
+                        After defeating monsters, earn money and buy items from the shop to enhance your damage. Access items from the
+                        battle menu and blast your enemies away!
                     </p>
-                    <img src="./images/Feature2.png" alt="Feature" />
+                    <img class="mx-auto my-4 p-2" src="/featureImages/shop.svg" alt="Feature" />
                 </div>
                 <!-- Features Text and Image 3 -->
                 <div class="space-y-6">
                     <h3 class="text-2xl text-quietquest-dark">☁️ Dynamic Weather Widget</h3>
                     <p class="font-afacad text-quietquest-dark">
                         Stay mindful of your environment with our real-time weather widget. This feature adapts to your location, displaying
-                        current conditions and offering gentle suggestions—like cozy tasks for rainy days or movement goals for sunny
-                        afternoons.
+                        current weather conditions in your area.
                     </p>
-                    <%- include('partials/weatherWidget') %>
+                    <div class="mt-20"><%- include('partials/weatherWidget') %></div>
                 </div>
             </div>
         </div>
 
         <!-- Div Container for the About Us Page-->
-        <div class="py-24 mt-48 mb-48 px-6" id="about">
+        <div class="py-24 px-6" id="about">
             <div class="max-w-4xl mx-auto text-center space-y-16">
                 <!-- About Us title-->
                 <h2 class="font-combo text-quietquest-dark text-4xl">About Us</h2>
@@ -228,7 +200,7 @@
                         <p class="font-afacad text-quietquest-dark">Nick is an ambitious CST student with great leadership skills.</p>
                     </div>
 
-                    <img class="w-48 h-auto rounded-md" src="./images/nick.jpg" alt="Nick's profile image" />
+                    <img class="w-48 h-auto rounded-md" src="/aboutUsImage/nick.png" alt="Nick's profile image" />
                 </div>
                 <!-- Angelo Santos -->
                 <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-center">
@@ -239,7 +211,7 @@
                             Angelo is perceptive CST student with great leadership skills and a good eye for design.
                         </p>
                     </div>
-                    <img class="w-48 h-auto rounded-md" src="./images/angelo.jpg" alt="Angelo's profile image" />
+                    <img class="w-48 h-auto rounded-md" src="/aboutUsImage/angelo.png" alt="Angelo's profile image" />
                 </div>
                 <!-- Andrew Hwang -->
                 <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-center">
@@ -250,7 +222,7 @@
                             Andrew is a creative CST student who thinks outside the box when crafting user-focused solutions.
                         </p>
                     </div>
-                    <img class="w-48 h-auto rounded-md" src="./images/andrew.jpg" alt="Andrew's profile image" />
+                    <img class="w-48 h-auto rounded-md" src="/aboutUsImage/andrew.jpg" alt="Andrew's profile image" />
                 </div>
                 <!-- Daryan Worya -->
                 <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-center">
@@ -260,7 +232,7 @@
                         <p class="font-afacad text-quietquest-dark">Daryan is an innovative CST student with a create eye for design.</p>
                     </div>
 
-                    <img class="w-48 h-auto rounded-md" src="./images/daryan.jpg" alt="Daryan's profile image" />
+                    <img class="w-48 h-auto rounded-md" src="/aboutUsImage/daryan.jpg" alt="Daryan's profile image" />
                 </div>
                 <!-- Giorgio Donatelli -->
                 <div class="flex flex-col md:flex-row items-center justify-center gap-8 text-center">
@@ -271,35 +243,15 @@
                             Giorgio is an knowledgable CST student with great knowledge of backend code.
                         </p>
                     </div>
-                    <img class="w-48 h-auto rounded-md" src="./images/giorgio.jpg" alt="Giorgio's profile image" />
+                    <img class="w-48 h-auto rounded-md" src="/aboutUsImage/giorgio.png" alt="Giorgio's profile image" />
                 </div>
             </div>
         </div>
 
-        <div class="w-full bg-quietquest-gold py-12 px-8" id="contact">
-            <div class="flex flex-col md:flex-row justify-between w-full items-center md:items-start text-center gap-8">
-                <!-- Left Side: Bug Report & Feedback -->
-                <div class="flex flex-col space-y-4">
-                    <!-- Bug -->
-                    <div class="flex flex-row space-x-4 justify-center w-full md:justify-end">
-                        <a class="text-base font-medium" href="">Report a bug</a>
-                        <img class="h-6 w-6 object-contain" src="/socialMediaIcons/bug.png" alt="bug" />
-                    </div>
-                    <!-- Feedback -->
-                    <div class="flex flex-row space-x-4 justify-center w-full md:justify-end">
-                        <a class="text-base font-medium" href="">Feedback</a>
-                        <img class="h-6 w-6 object-contain" src="/socialMediaIcons/feedback.png" alt="feedback" />
-                    </div>
-                </div>
-
-                <!-- Right Side: Social Media Icons -->
-                <div class="flex flex-row space-x-4 justify-center w-full md:justify-end">
-                    <img class="h-6 w-6 object-contain" src="/socialMediaIcons/discord.png" alt="discord" />
-                    <img class="h-6 w-6 object-contain" src="/socialMediaIcons/google.png" alt="google" />
-                    <img class="h-6 w-6 object-contain" src="/socialMediaIcons/facebook.png" alt="facebook" />
-                    <img class="h-6 w-6 object-contain" src="/socialMediaIcons/twitter.png" alt="twitter" />
-                </div>
-            </div>
+        <div class="w-full bg-quietquest-gold py-6 px-4">
+            <div class="text-center text-quietquest-dark font-medium text-base">© QuietQuest Team 2025. All rights reserved.</div>
         </div>
+
+        <script src="/js/hamburger.js"></script>
     </body>
 </html>

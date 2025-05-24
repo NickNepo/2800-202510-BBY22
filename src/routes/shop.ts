@@ -1,25 +1,18 @@
 import { Express, Request, Response } from "express";
-import { Db } from "mongodb";
-import { buyItem } from "../utils/storeUtils.js";
+import { Db, ObjectId } from "mongodb";
+import { buyItem, ItemInfo } from "../utils/storeUtils.js";
 import validateSession from "../middleware/validateSession.js";
-
-interface Item {
-    _id: string;
-    name: string;
-    description: string;
-    imageUrl?: string;
-    price: number;
-}
+import StatusError from "../utils/statusError.js";
 
 export default (app: Express, database: Db) => {
     // GET /shop → render shop.ejs with all items + notifications
     app.get("/shop", validateSession, async (req: Request, res: Response) => {
-        const rawItems = await database.collection<Item>("items").find({}).toArray();
+        const rawItems = await database.collection<ItemInfo>("items").find({}).toArray();
         const items = rawItems.map(i => ({
             _id: i._id.toString(),
             name: i.name,
             description: i.description,
-            imageUrl: i.imageUrl ?? "/images/placeholder.png",
+            image: i.image,
             price: i.price,
         }));
 
@@ -35,19 +28,19 @@ export default (app: Express, database: Db) => {
         if (req.session.loggedInUserId === undefined) {
             throw new StatusError(401, "Please authenticate first");
         }
-        const { itemName } = req.body as { itemName?: string };
-        if (!itemName) {
+        const { itemId } = req.body as { itemId?: string };
+        if (itemId === undefined) {
             res.redirect("/shop");
             return;
         }
 
         try {
-            await buyItem(req, database, itemName);
+            const item = await buyItem(req, database, new ObjectId(itemId));
             // on success, show success message
-            res.redirect(`/shop?success=${encodeURIComponent(itemName)}`);
+            res.redirect(`/shop?success=${encodeURIComponent(item.name)}`);
             return;
         } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : String(err); 
+            const message = err instanceof Error ? err.message : String(err);
             res.redirect(`/shop?error=${encodeURIComponent(message)}`);
             return;
         }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- include your partials/header.ejs -->
+        <%- include('partials/header') %>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit Profile — <%= user.username %></title>
+    </head>
+    <body class="bg-[#BCDA94] min-h-screen flex flex-col">
+        <!-- Top Navbar -->
+        <%- include('partials/topNavbar') %>
+
+        <!-- Main edit card -->
+        <main class="flex-1 bg-[#F7F1E6] mx-4 mt-8 p-6 rounded-t-3xl shadow-lg">
+            <h1 class="text-2xl font-bold text-[#102128] text-center mb-6">Edit Profile</h1>
+
+            <form action="/profile/edit" method="POST" class="space-y-4">
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block text-sm font-medium text-[#102128]">Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        value="<%= user.username %>"
+                        required
+                        minlength="3"
+                        class="mt-1 block w-full px-3 py-2 bg-white border rounded-lg text-[#102128] focus:outline-none focus:ring-2 focus:ring-[#426F8A]"
+                    />
+                </div>
+
+                <!-- Bio -->
+                <div>
+                    <label for="bio" class="block text-sm font-medium text-[#102128]">Bio</label>
+                    <textarea
+                        name="bio"
+                        id="bio"
+                        rows="4"
+                        class="mt-1 block w-full px-3 py-2 bg-white border rounded-lg text-[#102128] focus:outline-none focus:ring-2 focus:ring-[#426F8A]"
+                    >
+<%= user.bio %></textarea
+                    >
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-between mt-6">
+                    <a href="/profile" class="px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-400 transition"> Cancel </a>
+                    <button type="submit" class="px-4 py-2 bg-[#ECB779] text-white rounded-lg hover:bg-[#D9A660] transition">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </main>
+
+        <!-- Bottom Navbar -->
+        <%- include('partials/bottomNavbar') %>
+    </body>
+</html>

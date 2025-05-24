@@ -3,15 +3,109 @@
     <head>
         <%- include('partials/header') %>
         <title>About QuietQuest's Team</title>
+        <style>
+            /* Custom spacing for web layout */
+            @media (min-width: 768px) {
+                body {
+                    padding-top: 4rem;
+                }
+            }
+        </style>
     </head>
-    <body>
-        Team Name: BBY-22 Team Members:
-        <ul>
-            <li>Angelo Santos</li>
-            <li>Nick Nepomuceno</li>
-            <li>Andrew Hwang</li>
-            <li>Giorgio Donatelli</li>
-            <li>Daryan Worya</li>
-        </ul>
+    <body class="bg-quietquest-gold font-afacad">
+        <%- include('partials/topNavbar') %>
+
+        <!-- Entire page integrated with AI, used our About Us page to create this page -->
+
+        <!-- Main Content -->
+        <main class="pb-16 md:pb-0">
+            <!-- Extra padding for bottom navbar -->
+            <!-- Team Header -->
+            <div class="bg-quietquest-blue text-quietquest-cream py-12 text-center">
+                <h1 class="font-combo text-5xl mb-2">BBY-22</h1>
+                <p class="text-xl">The QuietQuest Development Team</p>
+            </div>
+
+            <!-- Team Members Section -->
+            <div class="py-12 px-6 max-w-4xl mx-auto">
+                <h2 class="font-combo text-quietquest-dark text-4xl text-center mb-12">About Us</h2>
+
+                <!-- Nick Nepomuceno -->
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+                    <img
+                        class="w-48 h-48 object-cover rounded-full border-4 border-quietquest-blue"
+                        src="/aboutUsImage/nick.png"
+                        alt="Nick's profile"
+                    />
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl text-quietquest-dark font-bold">Nick Nepomuceno</h3>
+                        <p class="text-quietquest-blue font-semibold mb-3">Lead Project Manager</p>
+                        <p class="text-quietquest-dark">Nick is an ambitious CST student with great leadership skills.</p>
+                    </div>
+                </div>
+
+                <!-- Angelo Santos -->
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8 mb-16">
+                    <img
+                        class="w-48 h-48 object-cover rounded-full border-4 border-quietquest-blue"
+                        src="/aboutUsImage/angelo.png"
+                        alt="Angelo's profile"
+                    />
+                    <div class="text-center md:text-right">
+                        <h3 class="text-2xl text-quietquest-dark font-bold">Angelo Santos</h3>
+                        <p class="text-quietquest-blue font-semibold mb-3">Project Co-Manager & Co-Designer</p>
+                        <p class="text-quietquest-dark">
+                            Angelo is perceptive CST student with great leadership skills and a good eye for design.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Andrew Hwang -->
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+                    <img
+                        class="w-48 h-48 object-cover rounded-full border-4 border-quietquest-blue"
+                        src="/aboutUsImage/andrew.jpg"
+                        alt="Andrew's profile"
+                    />
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl text-quietquest-dark font-bold">Andrew Hwang</h3>
+                        <p class="text-quietquest-blue font-semibold mb-3">Lead Designer</p>
+                        <p class="text-quietquest-dark">
+                            Andrew is a creative CST student who thinks outside the box when crafting user-focused solutions.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Daryan Worya -->
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8 mb-16">
+                    <img
+                        class="w-48 h-48 object-cover rounded-full border-4 border-quietquest-blue"
+                        src="/aboutUsImage/daryan.jpg"
+                        alt="Daryan's profile"
+                    />
+                    <div class="text-center md:text-right">
+                        <h3 class="text-2xl text-quietquest-dark font-bold">Daryan Worya</h3>
+                        <p class="text-quietquest-blue font-semibold mb-3">Co-Designer & Co-Backend Developer</p>
+                        <p class="text-quietquest-dark">Daryan is an innovative CST student with a creative eye for design.</p>
+                    </div>
+                </div>
+
+                <!-- Giorgio Donatelli -->
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+                    <img
+                        class="w-48 h-48 object-cover rounded-full border-4 border-quietquest-blue"
+                        src="/aboutUsImage/giorgio.png"
+                        alt="Giorgio's profile"
+                    />
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl text-quietquest-dark font-bold">Giorgio Donatelli</h3>
+                        <p class="text-quietquest-blue font-semibold mb-3">Lead Backend Developer</p>
+                        <p class="text-quietquest-dark">Giorgio is a knowledgeable CST student with great expertise in backend code.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/bottomNavbar') %>
     </body>
 </html>
